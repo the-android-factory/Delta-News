@@ -1,30 +1,28 @@
 package com.dmp.deltanews
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import com.dmp.deltanews.databinding.ActivityNewsFeedBinding
 
 class NewsFeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news_feed)
 
-        val database = Firebase.database
-        val myRef = database.getReference("message")
+        val binding: ActivityNewsFeedBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_news_feed)
 
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                Log.i("SNAPSHOT", snapshot.value.toString())
-            }
+        val viewModel: NewsFeedViewModel = ViewModelProvider(this)[NewsFeedViewModel::class.java]
 
-            override fun onCancelled(error: DatabaseError) {
-                // Nothing to do
-            }
-        })
+        binding.lifecycleOwner = this
+
+        binding.viewModel = viewModel
+
+//        binding.textOnScreen = "Hello!"
+//
+//        binding.textView.postDelayed({
+//            binding.textOnScreen = "Hello, again!"
+//        }, 2_000)
     }
 }
