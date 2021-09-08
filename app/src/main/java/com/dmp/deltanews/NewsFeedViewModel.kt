@@ -1,18 +1,18 @@
 package com.dmp.deltanews
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import kotlinx.coroutines.delay
+import com.dmp.deltanews.model.NewsFeedItem
 
-class NewsFeedViewModel: ViewModel() {
+class NewsFeedViewModel : ViewModel() {
 
-    private var number = 0
-    val liveData: LiveData<Int> = liveData {
-        while (true) {
-            delay(50)
-            emit(number)
-            number++
-        }
+    private val repository = NewsFeedRepository()
+
+    private val _newsFeedLiveData = MutableLiveData<List<NewsFeedItem>>()
+    val newsFeedLiveData: LiveData<List<NewsFeedItem>> = _newsFeedLiveData
+
+    fun fetchNewsFeed() {
+        repository.fetchNewsFeed(_newsFeedLiveData)
     }
 }

@@ -19,10 +19,6 @@ class NewsFeedActivity : AppCompatActivity() {
 
         binding.viewModel = viewModel
 
-//        binding.textOnScreen = "Hello!"
-//
-//        binding.textView.postDelayed({
-//            binding.textOnScreen = "Hello, again!"
-//        }, 2_000)
+        viewModel.fetchNewsFeed()
     }
 }
