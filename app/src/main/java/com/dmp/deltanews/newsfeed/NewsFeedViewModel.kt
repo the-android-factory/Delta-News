@@ -1,4 +1,4 @@
-package com.dmp.deltanews
+package com.dmp.deltanews.newsfeed
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
