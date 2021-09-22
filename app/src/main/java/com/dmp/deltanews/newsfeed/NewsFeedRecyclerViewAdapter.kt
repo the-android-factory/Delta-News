@@ -40,6 +40,9 @@ class NewsFeedRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         fun onBind(newsFeedItem: NewsFeedItem) {
             binding.title = newsFeedItem.title
             binding.description = newsFeedItem.description
+            binding.source = newsFeedItem.source
+            binding.published = newsFeedItem.published
+            binding.imageUrl = newsFeedItem.image_url
         }
     }
 }

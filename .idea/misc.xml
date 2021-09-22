@@ -5,7 +5,7 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19746376811594202" />
         <entry key="app/src/main/res/layout/activity_news_feed.xml" value="0.1515625" />
-        <entry key="app/src/main/res/layout/view_holder_news_feed_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/view_holder_news_feed_item.xml" value="0.335" />
       </map>
     </option>
   </component>
