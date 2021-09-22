@@ -24,8 +24,5 @@ class NewsFeedActivity : AppCompatActivity() {
         binding.recyclerView.adapter = newsFeedAdapter
 
         viewModel.fetchNewsFeed()
-        viewModel.newsFeedLiveData.observe(this) { newsFeedItems ->
-            newsFeedAdapter.setItems(newsFeedItems)
-        }
     }
 }

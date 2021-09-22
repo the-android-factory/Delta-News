@@ -8,7 +8,7 @@ import com.dmp.deltanews.R
 import com.dmp.deltanews.databinding.ViewHolderNewsFeedItemBinding
 import com.dmp.deltanews.model.NewsFeedItem
 
-class NewsFeedRecyclerViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NewsFeedRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val newsFeedItems = mutableListOf<NewsFeedItem>()
 
@@ -25,20 +25,21 @@ class NewsFeedRecyclerViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setItems(newsFeedItems: List<NewsFeedItem>) {
+    fun setItems(newsFeedItems: List<NewsFeedItem>?) {
         this.newsFeedItems.clear()
-        this.newsFeedItems.addAll(newsFeedItems)
+        this.newsFeedItems.addAll(newsFeedItems ?: emptyList())
         notifyDataSetChanged()
     }
 
-    inner class NewsFeedItemViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.view_holder_news_feed_item, parent, false)
+    inner class NewsFeedItemViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+        LayoutInflater.from(parent.context)
+            .inflate(R.layout.view_holder_news_feed_item, parent, false)
     ) {
         private val binding = ViewHolderNewsFeedItemBinding.bind(itemView)
 
         fun onBind(newsFeedItem: NewsFeedItem) {
-            binding.titleTextView.text = newsFeedItem.title
-            binding.descriptionTextView.text = newsFeedItem.description
+            binding.title = newsFeedItem.title
+            binding.description = newsFeedItem.description
         }
     }
 }
