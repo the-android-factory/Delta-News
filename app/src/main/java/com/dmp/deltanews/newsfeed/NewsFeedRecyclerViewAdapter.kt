@@ -7,8 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dmp.deltanews.R
 import com.dmp.deltanews.databinding.ViewHolderNewsFeedItemBinding
 import com.dmp.deltanews.model.NewsFeedItem
+import java.lang.ref.WeakReference
 
-class NewsFeedRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NewsFeedRecyclerViewAdapter(
+    private val callbackWeakRef: WeakReference<NewsFeedItemInterface>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    interface NewsFeedItemInterface {
+        fun onNewsFeedItemClicked(url: String)
+    }
 
     private val newsFeedItems = mutableListOf<NewsFeedItem>()
 
@@ -17,7 +24,9 @@ class NewsFeedRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as NewsFeedItemViewHolder).onBind(newsFeedItems[position])
+        (holder as NewsFeedItemViewHolder).onBind(newsFeedItems[position]) { url ->
+            callbackWeakRef.get()?.onNewsFeedItemClicked(url)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -37,12 +46,16 @@ class NewsFeedRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
     ) {
         private val binding = ViewHolderNewsFeedItemBinding.bind(itemView)
 
-        fun onBind(newsFeedItem: NewsFeedItem) {
+        fun onBind(newsFeedItem: NewsFeedItem, onClick: (String) -> Unit) {
             binding.title = newsFeedItem.title
             binding.description = newsFeedItem.description
             binding.source = newsFeedItem.source
             binding.published = newsFeedItem.published
             binding.imageUrl = newsFeedItem.image_url
+
+            binding.root.setOnClickListener {
+                onClick(newsFeedItem.url)
+            }
         }
     }
 }
