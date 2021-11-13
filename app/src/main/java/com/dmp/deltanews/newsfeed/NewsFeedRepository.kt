@@ -19,7 +19,7 @@ class NewsFeedRepository {
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val newsFeedItems: List<NewsFeedItem> = snapshot.children.map { dataSnapshot ->
-                        dataSnapshot.getValue(NewsFeedItem::class.java)!!
+                        dataSnapshot.getValue(NewsFeedItem::class.java)!!.copy(id = dataSnapshot.key!!)
                     }
 
                     liveData.postValue(newsFeedItems)
@@ -29,5 +29,9 @@ class NewsFeedRepository {
                     // Nothing to do
                 }
             })
+    }
+
+    fun updateFavoriteStatus(id: String, isFavorite: Boolean) {
+        newsFeedReference.child(id).child("favorite").setValue(isFavorite)
     }
 }
